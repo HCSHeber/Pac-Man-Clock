@@ -15,6 +15,7 @@ function update() {
 	ctx.fillStyle = '#FFFF00'
 	drawHands();
 	pacManPointer();
+	drawFoods();
 
 }
 
@@ -109,6 +110,18 @@ function pacManPointer() {
 	ctx.arc(centerX + hoursHandTopDistanceX, centerY + hoursHandTopDistanceY, 9, hoursOpenMouthAngle, hoursCloseMouthAngle);
 	ctx.lineTo(centerX + hoursHandTopDistanceX, centerY + hoursHandTopDistanceY);
 	ctx.fill();
+}
+
+function drawFoods() {
+	for (let i = 1; i <= 12; i++){
+		foodPositionX = Math.cos(Math.PI/(6/i)).toFixed(4) * 300 + centerX;
+		foodPositionY = Math.sin(Math.PI/(6/i)).toFixed(4) * 300 + centerY;
+
+		ctx.fillStyle = '#fff';
+		ctx.beginPath();
+		ctx.arc(foodPositionX, foodPositionY, 10, 0, 2*Math.PI);
+		ctx.fill();
+	}
 }
 
 function degreeToRadians(degree) {

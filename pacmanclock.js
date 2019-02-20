@@ -16,6 +16,7 @@ function update() {
 	drawHands();
 	pacManPointer();
 	drawFoods();
+	drawGhosts();
 
 }
 
@@ -44,6 +45,7 @@ function getHandAngle() {
 }
 
 function drawFaceCircle() {
+	// ctx.lineWidth = '2';
 	ctx.beginPath();
 	ctx.arc(centerX, centerY, 280, 0, 2*Math.PI);
 	ctx.stroke();
@@ -114,12 +116,49 @@ function pacManPointer() {
 
 function drawFoods() {
 	for (let i = 1; i <= 12; i++){
-		foodPositionX = Math.cos(Math.PI/(6/i)).toFixed(4) * 300 + centerX;
-		foodPositionY = Math.sin(Math.PI/(6/i)).toFixed(4) * 300 + centerY;
+		let foodPositionX = Math.cos(Math.PI/(6/i)).toFixed(4) * 300 + centerX;
+		let foodPositionY = Math.sin(Math.PI/(6/i)).toFixed(4) * 300 + centerY;
 
 		ctx.fillStyle = '#fff';
 		ctx.beginPath();
 		ctx.arc(foodPositionX, foodPositionY, 10, 0, 2*Math.PI);
+		ctx.fill();
+	}
+}
+
+function drawGhosts() {
+	ctx.strokeStyle = 'red';
+	for (let i = 1; i <= 4; i++) {
+		let ghostPositionX = Math.cos(Math.PI/(2/i)).toFixed(4) * 300 + centerX;
+		let ghostPositionY = Math.sin(Math.PI/(2/i)).toFixed(4) * 300 + centerY;
+		colors = ['#00FF00', '#FD0000', '#DEA185', '#2121DE'];
+		ctx.fillStyle = colors[i-1];
+
+		ctx.beginPath();
+		ctx.moveTo(ghostPositionX + 14, ghostPositionY);
+		ctx.lineTo(ghostPositionX + 14, ghostPositionY + 16);
+		ctx.lineTo(ghostPositionX + 8, ghostPositionY + 12);
+		ctx.lineTo(ghostPositionX + 5, ghostPositionY + 16);
+		ctx.lineTo(ghostPositionX, ghostPositionY + 12);
+		ctx.lineTo(ghostPositionX - 5, ghostPositionY + 16);
+		ctx.lineTo(ghostPositionX - 7, ghostPositionY + 12);
+		ctx.lineTo(ghostPositionX - 13, ghostPositionY + 16);
+		ctx.lineTo(ghostPositionX - 13, ghostPositionY);
+		ctx.bezierCurveTo(ghostPositionX-13, ghostPositionY-18, ghostPositionX-3, ghostPositionY-14, ghostPositionX, ghostPositionY-16);
+		ctx.bezierCurveTo(ghostPositionX, ghostPositionY-15, ghostPositionX+15, ghostPositionY-18, ghostPositionX + 14, ghostPositionY);
+		ctx.fill();	
+
+		ctx.fillStyle = '#fff';
+		ctx.beginPath();
+		ctx.arc(ghostPositionX - 6, ghostPositionY - 2, 4, 0, 2*Math.PI);
+		ctx.arc(ghostPositionX + 7, ghostPositionY - 2, 4, 0, 2*Math.PI);
+		ctx.fill();
+
+
+		ctx.fillStyle = '#000';
+		ctx.beginPath();
+		ctx.arc(ghostPositionX - 7, ghostPositionY - 3, 2, 0, 2*Math.PI);
+		ctx.arc(ghostPositionX + 6, ghostPositionY - 3, 2, 0, 2*Math.PI);
 		ctx.fill();
 	}
 }
